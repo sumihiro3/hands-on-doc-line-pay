@@ -1,0 +1,55 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>LINE Pay ハンズオン資料</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="dist"
+                  title="LINE Pay ハンズオン資料"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="加盟店審査" duration="0">
+        <p>申請書類の不備などが二度ありましたが、約2週間で審査完了しました。審査がスムーズなのも時間がない個人としてはうれしいところです。</p>
+<p>審査が完了すると、下のようなメールが届きます。<br><img alt="加盟店審査完了メール" src="img/359cfbfccdff7fd5.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="LINE Pay Sandboxの申請と設定" duration="0">
+        <p>実際に決済するには加盟店登録が必要ですが、開発して動作を確認するフェーズであればSandbox が利用できます。こちらは下記のURLから申請すると、Sandbox 用のLINE Pay API アカウントが払い出されますので、誰でもすぐに利用できます。</p>
+<h2 is-upgraded>LINE Pay Sandboxの申請</h2>
+<pre><code>- @&lt;href&gt;{https://pay.line.me/jp/developers/techsupport/sandbox/creation?locale=ja_JP}
+</code></pre>
+<p>アカウントが払い出されたらLINE Pay コンソールの決済連動管理 &gt; 連動キー管理からChannel ID とChannel Secret Key を確認します。これらの値はLINE Pay のAPI コールに必要になります。<br><img alt="連動キー管理" src="img/460cf0bbc685c699.png"></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>
