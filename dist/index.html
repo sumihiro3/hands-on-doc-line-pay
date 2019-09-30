@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>LINE Pay ハンズオン資料</title>
+  <title>LINE Pay ハンズオン資料 [Version. 2019.10.03]</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,29 +23,63 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="dist"
-                  title="LINE Pay ハンズオン資料"
+                  title="LINE Pay ハンズオン資料 [Version. 2019.10.03]"
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="LINE Bot の作成" duration="0">
-        <p>さくせいふがふが</p>
+      <google-codelab-step label="1-1. LINE Pay とは" duration="0">
+        <p>LINE Payは、LINEのユーザーがLINE Pay加盟店のサイトで利用できる決済システムです。<br>ユーザーがLINE Payを使って支払いをするには、決済を行うサイトがLINE Pay加盟店である必要があります。</p>
+<h2 is-upgraded>LINE Pay の加盟店申請</h2>
+<h3 is-upgraded>個人でも加盟店申請できる</h3>
+<p>LINE Pay の加盟店になるには法人でなくとも大丈夫です。個人で加盟店申請するには、個人事業主として開業届を出して青色申告をしてあればOKです。<br>LINE Pay 公式の「よくある質問」にも、個人事業主でも加入できると書いてあります。</p>
+<p><a href="https://pay.line.me/jp/intro/faq?locale=ja_JP&sequences=14" target="_blank">個人事業主も加入できますか？：よくある質問＠LINE Pay</a></p>
+<p><strong>その他、詳しい申請方法は </strong><a href="https://miso-develop.booth.pm/items/1573526" target="_blank"><strong>LINE API HANDBOOK</strong></a><strong> の第11章に書いてありますので、ぜひ読んでください！</strong></p>
+<p class="image-container"><img alt="LINE API HANDBOOK" src="img\ebe30605e2c51b47.jpeg"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="加盟店審査" duration="0">
-        <p>申請書類の不備などが二度ありましたが、約2週間で審査完了しました。審査がスムーズなのも時間がない個人としてはうれしいところです。</p>
-<p>審査が完了すると、下のようなメールが届きます。<br><img alt="加盟店審査完了メール" src="img\359cfbfccdff7fd5.png"></p>
+      <google-codelab-step label="LINE Pay API を使った処理の流れ" duration="0">
+        <p>3つの登場人物が存在します。</p>
+<p>一つ目は サービスプロバイダー です。これは有償で商品またはサービスを提供する事業主（おそらくあなた）で、実質的に何らかのアプリとなります。</p>
+<p>二つ目は その商品またはサービスを購入する ユーザー です。</p>
+<p>そして三つ目は LINE Payです。サービスプロバイダーはLINE PayのAPIに、ユーザーはLINE Payのアプリにアクセスして下記の流れで決済をおこなうことになります。</p>
+<h2 is-upgraded>2-1. 決済の流れ</h2>
+<p class="image-container"><img alt="決済の流れ" src="img\56e34847a856f03d.png"></p>
+<h3 is-upgraded>a) 決済予約</h3>
+<p>LINE Pay 決済を行う前に、サービスプロバイダーの状態が正常であるかを判断し、決済のための情報を予約します。<br>決済予約が成功したら、決済完了/払い戻しするまで使用する「取引番号（transactionId）」と、決済を実行する「決済URL（paymentUrl）」が発行されます。</p>
+<p><strong>デフォルトではオーソリと売り上げ処理が一度に処理されますが、オーソリのみ行うことも可能です</strong></p>
+<h3 is-upgraded>b) ユーザーによる承認</h3>
+<p>画面が決済URLへ遷移後、LINE Pay の画面でユーザーが決済内容を確認して決済を承認します。</p>
+<h3 is-upgraded>c) 承認実行</h3>
+<p>サービスプロバイダーが決済を最終的に完了させるための API です。サービスプロバイダーで決済 confirm API を呼び出すことによって、実際の決済が完了します。</p>
+<p><strong>決済予約時にオーソリのみ行うこととした場合、confirm API 実行時はオーソリ状態になるため、「Capture API」を実行して決済完了とする必要があります。</strong></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="LINE Pay Sandboxの申請と設定" duration="0">
         <p>実際に決済するには加盟店登録が必要ですが、開発して動作を確認するフェーズであればSandbox が利用できます。こちらは下記のURLから申請すると、Sandbox 用のLINE Pay API アカウントが払い出されますので、誰でもすぐに利用できます。</p>
-<h2 is-upgraded>LINE Pay Sandboxの申請</h2>
-<pre><code>- @&lt;href&gt;{https://pay.line.me/jp/developers/techsupport/sandbox/creation?locale=ja_JP}
-</code></pre>
-<p>アカウントが払い出されたらLINE Pay コンソールの決済連動管理 &gt; 連動キー管理からChannel ID とChannel Secret Key を確認します。これらの値はLINE Pay のAPI コールに必要になります。<br><img alt="連動キー管理" src="img\460cf0bbc685c699.png"></p>
+<h2 is-upgraded>3-1. LINE Pay Sandboxの申請</h2>
+<p class="image-container"><img alt="Sandbox の申請" src="img\2450f40d4f50a1fa.png"></p>
+<p><a href="https://pay.line.me/jp/developers/techsupport/sandbox/creation?locale=ja_JP" target="_blank">こちら</a> からSandbox環境の利用申請ができます。<br>メールアドレスを入力して「Submit」ボタンを押下するとアカウント情報が払い出されます。</p>
+<h2 is-upgraded>3-2. キー情報の確認</h2>
+<p>アカウントが払い出されたら<a href="https://pay.line.me/login/" target="_blank">LINE Pay コンソール</a> の決済連動管理 &gt; 連動キー管理からChannel ID とChannel Secret Key を確認します。これらの値はLINE Pay のAPI コールに必要になります。<br>メモしておいてください。<br><img alt="連動キー管理" src="img\460cf0bbc685c699.png"></p>
+<h2 is-upgraded>3-3. 技術ドキュメント</h2>
+<p>ちょっと見つけにくいですが、<a href="https://pay.line.me/jp/developers/documentation/download/tech?locale=ja_JP" target="_blank">ここ</a> にあります。</p>
+<p><a href="https://pay.line.me/file/guidebook/technicallinking/LINE_Pay_Integration_Guide_for_Merchant-v1.1.2-JP.pdf" target="_blank">LINE Pay技術連動ガイド</a> に詳細なAPI 情報が載っていますので、実装の際にはこちらを読んでください。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="チャネルの作成" duration="0">
+        <p>今回はBot版のみで行こうかな？</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="実装と実行" duration="0">
+        <p>git clone からの各種キー設定変更で ngrok 使って実行！</p>
 
 
       </google-codelab-step>
