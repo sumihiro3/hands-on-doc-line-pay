@@ -89,9 +89,26 @@ LINE Pay 決済を行う前に、サービスプロバイダーの状態が正�
 
 ## チャネルの作成
 
-今回はBot版のみで行こうかな？
+### 4-1. LINE Developers にログイン
+
+[LINE Developers](https://developers.line.biz/ja/) にアクセスしてログイン
+![LINE Developers](images/LINEDevelopers.png)
+
+
+### 4-2. プロバイダーを選択
+
+任意のプロバイダーを選択
+![LINE Developers](images/ProviderList.png)
+
+
+#### プロバイダー未作成の人は画面右上の「新規プロバイダー作成」ボタンを押下して新規作成してください。
+
+*任意の「プロバイダー名」を入力して作成*
+
 
 ## 実装と実行
+
+### 5-1. 環境変数の設定（.env ファイル）
 
 git clone からの各種キー設定変更で ngrok 使って実行！
 
