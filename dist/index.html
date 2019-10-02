@@ -34,7 +34,7 @@
 <p>LINE Pay の加盟店になるには法人でなくとも大丈夫です。個人で加盟店申請するには、個人事業主として開業届を出して青色申告をしてあればOKです。<br>LINE Pay 公式の「よくある質問」にも、個人事業主でも加入できると書いてあります。</p>
 <p><a href="https://pay.line.me/jp/intro/faq?locale=ja_JP&sequences=14" target="_blank">個人事業主も加入できますか？：よくある質問＠LINE Pay</a></p>
 <p><strong>その他、詳しい申請方法は </strong><a href="https://miso-develop.booth.pm/items/1573526" target="_blank"><strong>LINE API HANDBOOK</strong></a><strong> の第11章に書いてありますので、ぜひ読んでください！</strong></p>
-<p class="image-container"><img alt="LINE API HANDBOOK" src="img\ebe30605e2c51b47.jpeg"></p>
+<p class="image-container"><img alt="LINE API HANDBOOK" src="img/ebe30605e2c51b47.jpeg"></p>
 
 
       </google-codelab-step>
@@ -45,7 +45,7 @@
 <p>二つ目は その商品またはサービスを購入する ユーザー です。</p>
 <p>そして三つ目は LINE Payです。サービスプロバイダーはLINE PayのAPIに、ユーザーはLINE Payのアプリにアクセスして下記の流れで決済をおこなうことになります。</p>
 <h2 is-upgraded>2-1. 決済の流れ</h2>
-<p class="image-container"><img alt="決済の流れ" src="img\56e34847a856f03d.png"></p>
+<p class="image-container"><img alt="決済の流れ" src="img/56e34847a856f03d.png"></p>
 <h3 is-upgraded>a) 決済予約</h3>
 <p>LINE Pay 決済を行う前に、サービスプロバイダーの状態が正常であるかを判断し、決済のための情報を予約します。<br>決済予約が成功したら、決済完了/払い戻しするまで使用する「取引番号（transactionId）」と、決済を実行する「決済URL（paymentUrl）」が発行されます。</p>
 <p><strong>デフォルトではオーソリと売り上げ処理が一度に処理されますが、オーソリのみ行うことも可能です</strong></p>
@@ -61,10 +61,10 @@
       <google-codelab-step label="LINE Pay Sandboxの申請と設定" duration="0">
         <p>実際に決済するには加盟店登録が必要ですが、開発して動作を確認するフェーズであればSandbox が利用できます。こちらは下記のURLから申請すると、Sandbox 用のLINE Pay API アカウントが払い出されますので、誰でもすぐに利用できます。</p>
 <h2 is-upgraded>3-1. LINE Pay Sandboxの申請</h2>
-<p class="image-container"><img alt="Sandbox の申請" src="img\2450f40d4f50a1fa.png"></p>
+<p class="image-container"><img alt="Sandbox の申請" src="img/2450f40d4f50a1fa.png"></p>
 <p><a href="https://pay.line.me/jp/developers/techsupport/sandbox/creation?locale=ja_JP" target="_blank">こちら</a> からSandbox環境の利用申請ができます。<br>メールアドレスを入力して「Submit」ボタンを押下するとアカウント情報が払い出されます。</p>
 <h2 is-upgraded>3-2. キー情報の確認</h2>
-<p>アカウントが払い出されたら<a href="https://pay.line.me/login/" target="_blank">LINE Pay コンソール</a> の決済連動管理 &gt; 連動キー管理からChannel ID とChannel Secret Key を確認します。これらの値はLINE Pay のAPI コールに必要になります。<br>メモしておいてください。<br><img alt="連動キー管理" src="img\94351f3d250138ac.png"></p>
+<p>アカウントが払い出されたら<a href="https://pay.line.me/login/" target="_blank">LINE Pay コンソール</a> の決済連動管理 &gt; 連動キー管理からChannel ID とChannel Secret Key を確認します。これらの値はLINE Pay のAPI コールに必要になります。<br>メモしておいてください。<br><img alt="連動キー管理" src="img/94351f3d250138ac.png"></p>
 <h2 is-upgraded>3-3. 技術ドキュメント</h2>
 <p>ちょっと見つけにくいですが、<a href="https://pay.line.me/jp/developers/documentation/download/tech?locale=ja_JP" target="_blank">ここ</a> にあります。</p>
 <p><a href="https://pay.line.me/file/guidebook/technicallinking/LINE_Pay_Integration_Guide_for_Merchant-v1.1.2-JP.pdf" target="_blank">LINE Pay技術連動ガイド</a> に詳細なAPI 情報が載っていますので、実装の際にはこちらを読んでください。</p>
@@ -72,20 +72,185 @@
 
       </google-codelab-step>
     
+      <google-codelab-step label="ngrok の実行" duration="0">
+        <h2 is-upgraded>4-1. ngrok を実行する</h2>
+<p>新規にターミナルまたはコマンドプロンプト（Powershell）を起動して、ngrok を実行する</p>
+<pre><code>$ ngrok http 5000
+</code></pre>
+<p>ngrok が起動したら「Forwarding」のURL（HTTPSの方）をメモしておく</p>
+<pre><code>ngrok by @inconshreveable                                                                                                                                                                                                                    (Ctrl+C to quit)
+
+Session Status                online
+Session Expires               7 hours, 28 minutes
+Update                        update available (version 2.3.34, Ctrl-U to update)
+Version                       2.3.18
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4040
+Forwarding                    http://xxxxxx.ngrok.io -&gt; http://localhost:5000
+Forwarding                    https://xxxxxx.ngrok.io -&gt; http://localhost:5000
+</code></pre>
+
+
+      </google-codelab-step>
+    
       <google-codelab-step label="チャネルの作成" duration="0">
-        <h2 is-upgraded>4-1. LINE Developers にログイン</h2>
-<p><a href="https://developers.line.biz/ja/" target="_blank">LINE Developers</a> にアクセスしてログイン<br><img alt="LINE Developers" src="img\ce8309d565a82ce5.png"></p>
-<h2 is-upgraded>4-2. プロバイダーを選択</h2>
-<p>任意のプロバイダーを選択<br><img alt="LINE Developers" src="img\4f01ad2bc958885d.png"></p>
+        <h2 is-upgraded>5-1. LINE Developers にログイン</h2>
+<p><a href="https://developers.line.biz/ja/" target="_blank">LINE Developers</a> にアクセスしてログイン<br><img alt="LINE Developers" src="img/ce8309d565a82ce5.png"></p>
+<h2 is-upgraded>5-2. プロバイダーを選択</h2>
+<p>任意のプロバイダーを選択<br><img alt="プロバイダー選択" src="img/4f01ad2bc958885d.png"></p>
 <h3 is-upgraded>プロバイダー未作成の人は画面右上の「新規プロバイダー作成」ボタンを押下して新規作成してください。</h3>
 <p><em>任意の「プロバイダー名」を入力して作成</em></p>
+<h2 is-upgraded>5-3. チャネルを新規作成</h2>
+<h3 is-upgraded>Botのチャネルを作成</h3>
+<p class="image-container"><img alt="チャネル作成" src="img/2a8b8249ff31da44.png"></p>
+<h3 is-upgraded>「Messaging API」 を選択</h3>
+<p class="image-container"><img alt="Messaging API" src="img/e9db29c175ee735f.png"></p>
+<h3 is-upgraded>チャネル情報を入力</h3>
+<p>チャネル情報を入力して、「入力内容を確認する」ボタンを押下する。</p>
+<h4 is-upgraded>チャネル情報の入力例</h4>
+<ul>
+<li>アプリ名<br><br><ul>
+<li>HandsOnPayBot</li>
+</ul>
+</li>
+<li>アプリ説明<br><br><ul>
+<li>LINE  Pay ハンズオン</li>
+</ul>
+</li>
+<li>大業種<br><br><ul>
+<li>個人</li>
+</ul>
+</li>
+<li>小業種<br><br><ul>
+<li>個人（その他）</li>
+</ul>
+</li>
+<li>メールアドレス<br><br><ul>
+<li>（ご自分のメールアドレス）</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="チャネルの情報を入力" src="img/823efd30324ca7ea.png"></p>
+<h3 is-upgraded>各種規約に同意してチャネルを作成する</h3>
+<p class="image-container"><img alt="各種規約に同意" src="img/6b45569c1394f655.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="チャネルの設定" duration="0">
+        <h2 is-upgraded>6-1. チャネル基本情報画面を開く</h2>
+<p>作成したチャネルを選択してチャネル基本情報画面を開く</p>
+<p class="image-container"><img alt="チャネルを選択" src="img/3cdb0ebbafa1fb1.png"></p>
+<h2 is-upgraded>6-2. Channel Secret をメモしておく</h2>
+<p>チャネル基本情報画面に表示されているChannel Secret をメモしておく</p>
+<p class="image-container"><img alt="CopyChannelSecret" src="img/166b3eb938b395ff.png"></p>
+<h2 is-upgraded>6-3. アクセストークン を発行してメモしておく</h2>
+<p>アクセストークンの「再発行」ボタンを押下して発行し、メモしておく</p>
+<p class="image-container"><img alt="GenerateToken" src="img/54bfa1030fa2b80a.png"></p>
+<h2 is-upgraded>6-4. Webhook 設定</h2>
+<p>Webhook送信 を「利用する」に設定して更新ボタンを押下する</p>
+<p class="image-container"><img alt="Webhook" src="img/1cff51a73021f700.png"></p>
+<h2 is-upgraded>6-5. Webhook URL設定</h2>
+<p>Webhook RUL に4-1 でメモしたngrok のURL + /webhook を入力して更新ボタンを押下する</p>
+<ul>
+<li>&#34;https://&#34; は不要です</li>
+</ul>
+<p class="image-container"><img alt="Webhook URL" src="img/cc512d3c7b5c387a.png"></p>
+<h2 is-upgraded>6-6. 自動応答メッセージ設定</h2>
+<p>自動応答メッセージ の画面右側にある「設定はこちら」リンクを押下して、公式アカウントマネージャー画面を開く</p>
+<p class="image-container"><img alt="自動応答メッセージ" src="img/266a6b0c06bd5876.png"></p>
+<p>応答設定の詳細設定</p>
+<ul>
+<li>応答メッセージ<br><br><ul>
+<li>オフ</li>
+</ul>
+</li>
+<li>Webhook<br><br><ul>
+<li>オン</li>
+</ul>
+</li>
+</ul>
+<p class="image-container"><img alt="応答メッセージ" src="img/8d142e782ff8f1b7.png"></p>
+<h2 is-upgraded>6-7. 作成したBotのチャネルを友だち登録する</h2>
+<p>LINEアプリへのQRコードをLINEアプリで読み込んで友だち登録する</p>
+<p class="image-container"><img alt="BotQRCode" src="img/ae470c8ebc510924.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="実装と実行" duration="0">
-        <h2 is-upgraded>5-1. 環境変数の設定（.env ファイル）</h2>
-<p>git clone からの各種キー設定変更で ngrok 使って実行！</p>
+        <h2 is-upgraded>7-1. git clone</h2>
+<p>ハンズオン用に適当なディレクトリを作成して、そこへソースコードをgit clone する</p>
+<p>クローンできたら、ダウンロードしたディレクトリをVisualStucioCode で開いておく</p>
+<h3 is-upgraded>Mac</h3>
+<pre><code>$ mkdir ~/ldgk-line-pay-hands-on &amp;&amp; cd ~/ldgk-line-pay-hands-on
+$ git clone https://github.com/sumihiro3/hands-on-line-pay.git
+$ cd hands-on-line-pay
+</code></pre>
+<h3 is-upgraded>Windows</h3>
+<pre><code>&gt; mkdir c:¥tmp¥ldgk-line-pay-hands-on
+&gt; cd ldgk-line-pay-hands-on
+&gt; git clone https://github.com/sumihiro3/hands-on-line-pay.git
+&gt; cd hands-on-line-pay
+</code></pre>
+<h3 is-upgraded>git clone 出来ない場合はリポジトリ内容をZIPファイルでダウンロード</h3>
+<p>git clone 出来ない場合は、<a href="https://github.com/sumihiro3/hands-on-line-pay.git" target="_blank">リポジトリのページ</a>にアクセスして、ページ右側の「Clone or download」ボタンを押下、「Download ZIP」ボタンを押下してリポジトリのZIPファイルをダウンロードし、適当なディレクトリに展開してください。</p>
+<p class="image-container"><img alt="DownloadGitZip" src="img/ba3358c2aa381667.png"></p>
+<h2 is-upgraded>7-2. プログラムに必要なモジュールをインストール</h2>
+<pre><code>$ npm install
+</code></pre>
+<h2 is-upgraded>7-3. メモしておいた設定を、設定ファイルに記入する</h2>
+<p>.env_sample ファイルを.env にリネームし、.env ファイルに設定を記入する</p>
+<pre><code>LINE_PAY_CHANNEL_ID=XXXXXXX
+LINE_PAY_CHANNEL_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+LINE_PAY_CONFIRM_URL=https://XXXXXXXX.ngrok.io/pay/confirm
+LINE_BOT_CHANNEL_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+LINE_BOT_ACCESS_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+</code></pre>
+<ul>
+<li>LINE_PAY_CHANNEL_ID<br><br><ul>
+<li>LINE Pay のChannel ID</li>
+</ul>
+</li>
+<li>LINE_PAY_CHANNEL_SECRET<br><br><ul>
+<li>LINE Pay のChannel Secret</li>
+</ul>
+</li>
+<li>LINE_PAY_CONFIRM_URL<br><br><ul>
+<li>https://XXXXXXXX.ngrok.io/pay/confirm</li>
+</ul>
+</li>
+<li>LINE_BOT_CHANNEL_SECRET<br><br><ul>
+<li>LINE Bot のChannel Secret</li>
+</ul>
+</li>
+<li>LINE_BOT_ACCESS_TOKEN<br><br><ul>
+<li>LINE Bot のアクセストークン</li>
+</ul>
+</li>
+</ul>
+<h2 is-upgraded>7-4. プログラムを起動</h2>
+<pre><code>$ node bot.js
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="BotでLINE Pay を試してみよう" duration="0">
+        <h2 is-upgraded>8-1. Bot のトーク画面で「チョコレート」と送る</h2>
+<p>LINE アプリで作成したBot のトーク画面を開く</p>
+<p class="image-container"><img alt="トーク画面" src="img/e976205c689972a1.png"></p>
+<p>テキストで「チョコレート」とメッセージを送る</p>
+<p class="image-container"><img alt="トーク画面" src="img/d041d0aafc78f354.png"></p>
+<p>サーバーサイドではLINE Pay の決済予約が実行され、取引番号（transactionId）」と、決済を実行する「決済URL（paymentUrl）」が発行されます</p>
+<h2 is-upgraded>8-2. LINE Pay 決済を体験</h2>
+<p>「LINE Pay で決済」ボタンを押下して決済画面へ遷移する<br>このボタンを押下するとLINE Pay の決済予約で返された「決済URL（paymentUrl）」のページ（LINE Pay の決済画面）にアクセスします</p>
+<p class="image-container"><img alt="トーク画面" src="img/a6eb9d8e5259cbce.png"></p>
+<p>「PAY NOW」ボタンを押下して決済を実行する</p>
+<p>ここがLINE Pay での「ユーザーによる承認」にあたります</p>
+<p class="image-container"><img alt="トーク画面" src="img/3bafda230d8a0e7b.png"></p>
+<p>決済が完了すると、サーバーサイドにWebhook が送信されます<br>承認実行（confirm API）を行うと決済が完了し、トーク画面へメッセージを送信します（Push API）</p>
+<p class="image-container"><img alt="トーク画面" src="img/d8f25147aea5722b.png"></p>
 
 
       </google-codelab-step>
