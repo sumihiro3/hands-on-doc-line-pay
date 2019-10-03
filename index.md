@@ -238,7 +238,7 @@ $ cd hands-on-line-pay
 
 ```bat
 > mkdir c:¥tmp¥ldgk-line-pay-hands-on
-> cd ldgk-line-pay-hands-on
+> cd c:¥ldgk-line-pay-hands-on
 > git clone https://github.com/sumihiro3/hands-on-line-pay.git
 > cd hands-on-line-pay
 ```
