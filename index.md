@@ -12,12 +12,12 @@ id: dist
 
 # LINE Pay ハンズオン資料 [Version. 2019.10.03]
 
-## 1-1. LINE Pay とは
+## LINE Pay とは
 
 LINE Payは、LINEのユーザーがLINE Pay加盟店のサイトで利用できる決済システムです。
 ユーザーがLINE Payを使って支払いをするには、決済を行うサイトがLINE Pay加盟店である必要があります。
 
-### LINE Pay の加盟店申請
+### 1-1. LINE Pay の加盟店申請
 
 #### 個人でも加盟店申請できる
 
